@@ -19,12 +19,23 @@ This will:
 2. Copy the Quick Action workflow to `~/Library/Services/`
 3. Configure ImageOptim for optimal lossy compression
 
-### After install
+### Setting up the Quick Action (recommended)
 
-If "Optimize Images" doesn't appear in Quick Actions:
-- Restart Finder: `killall Finder`
-- Or log out and log back in
-- Or enable it in **System Settings → Privacy & Security → Extensions → Finder**
+The install script copies the workflow file, but macOS may not register it automatically. If "Optimize Images" doesn't appear in Quick Actions after running `killall Finder` or logging out/in, create it manually — takes 30 seconds:
+
+1. Open **Automator** (Spotlight → type "Automator")
+2. Click **New Document** → choose **Quick Action**
+3. Set **"Workflow receives current"** to **files or folders** in **Finder**
+4. Drag **"Run AppleScript"** from the left sidebar into the workflow area
+5. Replace the script with:
+   ```applescript
+   on run {input, parameters}
+       tell application "ImageOptim" to open input
+   end run
+   ```
+6. **Cmd+S** → save as **"Optimize Images"**
+
+Done — now right-click any image → Quick Actions → Optimize Images
 
 ## Uninstall
 
